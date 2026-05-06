@@ -14,10 +14,13 @@ async function loadFortunes() {
         console.error('Error loading fortunes:', error);
         // Fallback fortunes if JSON fails to load
         fortunes = [
-            { title: 'Focus on Improving', imageUrl: 'images/focus-improving.jpg' },
-            { title: 'Care Instead of Control', imageUrl: 'images/care-instead-control.jpg' },
-            { title: 'It Didn\'t Work Out', imageUrl: 'images/didnt-work-out.jpg' },
-            { title: 'Enjoy Your Body', imageUrl: 'images/enjoy-body.jpg' }
+            { title: '1', imageUrl: 'json1.jpg' },
+            { title: '2', imageUrl: 'json2.jpg' },
+            { title: '3', imageUrl: 'json3.jpg' },
+            { title: '4', imageUrl: 'json4.jpg' }
+            { title: '5', imageUrl: 'json5.jpg' }
+            { title: '6', imageUrl: 'json6.jpg' }
+            { title: '7', imageUrl: 'json7.jpg' }
         ];
     }
 }
