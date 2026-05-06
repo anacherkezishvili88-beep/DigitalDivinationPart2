@@ -12,7 +12,7 @@
         
         <div class="fortune-section">
             <!-- Cookie Container -->
-            <div class="cookie-wrapper">
+            <div class="cookie-wrapper" id="cookieWrapper">
                 <div class="cookie" id="cookie">
                     <div class="cookie-half cookie-top"></div>
                     <div class="cookie-half cookie-bottom"></div>
@@ -35,6 +35,110 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // INLINE SCRIPT - This should always work
+        let fortunes = [];
+        let currentState = 'idle';
+
+        console.log('=== SCRIPT STARTED ===');
+
+        // Load fortunes
+        function loadFortunes() {
+            fortunes = [
+                { title: 'Focus on Improving', imageUrl: 'images/json1.jpg' },
+                { title: 'Care Instead of Control', imageUrl: 'images/json2.jpg' },
+                { title: 'It Didn\'t Work Out', imageUrl: 'images/json3.jpg' },
+                { title: 'Enjoy Your Body', imageUrl: 'images/json4.jpg' },
+                { title: 'Fortune 5', imageUrl: 'images/json5.jpg' },
+                { title: 'Fortune 6', imageUrl: 'images/json6.jpg' },
+                { title: 'Fortune 7', imageUrl: 'images/json7.jpg' },
+                { title: 'Fortune 8', imageUrl: 'images/json8.jpg' },
+                { title: 'Fortune 9', imageUrl: 'images/json9.jpg' },
+                { title: 'Fortune 10', imageUrl: 'images/json10.jpg' },
+                { title: 'Fortune 11', imageUrl: 'images/json11.jpg' }
+            ];
+            console.log('Fortunes loaded:', fortunes.length);
+        }
+
+        function getRandomFortune() {
+            return fortunes[Math.floor(Math.random() * fortunes.length)];
+        }
+
+        function displayFortune() {
+            const fortune = getRandomFortune();
+            const img = document.getElementById('fortuneImage');
+            const display = document.getElementById('fortuneDisplay');
+            
+            img.src = fortune.imageUrl;
+            img.alt = fortune.title;
+            display.classList.add('show');
+            
+            console.log('Fortune displayed:', fortune.title);
+        }
+
+        function crackCookie() {
+            console.log('Crack called, current state:', currentState);
+            
+            if (currentState !== 'idle') return;
+            
+            currentState = 'cracking';
+            
+            const top = document.querySelector('.cookie-top');
+            const bottom = document.querySelector('.cookie-bottom');
+            const wrapper = document.getElementById('cookieWrapper');
+            
+            top.classList.add('crack');
+            bottom.classList.add('crack');
+            
+            console.log('Animation started');
+            
+            setTimeout(() => {
+                wrapper.classList.add('hide');
+                displayFortune();
+                currentState = 'displaying';
+                console.log('State: displaying');
+            }, 800);
+        }
+
+        function resetCookie() {
+            const top = document.querySelector('.cookie-top');
+            const bottom = document.querySelector('.cookie-bottom');
+            const wrapper = document.getElementById('cookieWrapper');
+            const display = document.getElementById('fortuneDisplay');
+            
+            top.classList.remove('crack');
+            bottom.classList.remove('crack');
+            wrapper.classList.remove('hide');
+            display.classList.remove('show');
+            
+            currentState = 'idle';
+            console.log('Cookie reset');
+        }
+
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOM LOADED ===');
+            
+            loadFortunes();
+            
+            const cookie = document.getElementById('cookie');
+            const btn = document.getElementById('newFortuneBtn');
+            
+            console.log('Cookie element:', cookie ? 'FOUND' : 'NOT FOUND');
+            console.log('Button element:', btn ? 'FOUND' : 'NOT FOUND');
+            
+            if (cookie) {
+                cookie.addEventListener('click', crackCookie);
+                console.log('Click listener added to cookie');
+            }
+            
+            if (btn) {
+                btn.addEventListener('click', resetCookie);
+                console.log('Click listener added to button');
+            }
+            
+            console.log('=== READY ===');
+        });
+    </script>
 </body>
 </html>
