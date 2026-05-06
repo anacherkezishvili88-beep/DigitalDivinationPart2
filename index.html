@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Fortune Cookie</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🥠 Digital Fortune Teller 🥠</h1>
+        
+        <div class="fortune-section">
+            <!-- Cookie Container -->
+            <div class="cookie-wrapper">
+                <div class="cookie" id="cookie">
+                    <div class="cookie-half cookie-top"></div>
+                    <div class="cookie-half cookie-bottom"></div>
+                    <div class="cookie-shine"></div>
+                </div>
+                <p class="instruction" id="instruction">Click the cookie to reveal your fortune!</p>
+            </div>
+
+            <!-- Fortune Display -->
+            <div class="fortune-display" id="fortuneDisplay">
+                <div class="fortune-content">
+                    <img id="fortuneImage" src="" alt="Fortune" class="fortune-image">
+                </div>
+                <button class="button-new-fortune" id="newFortuneBtn">Get Another Fortune</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>✨ May your fortunes guide you ✨</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
