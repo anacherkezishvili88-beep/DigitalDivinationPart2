@@ -1,53 +1,46 @@
 [
   {
-    "title": "1",
-    "imageUrl": "json1.jpg"
+    "title": "Focus on Improving",
+    "imageUrl": "images/json1.jpg"
   },
   {
-    "title": "2",
-    "imageUrl": "json2.jpg"
+    "title": "Care Instead of Control",
+    "imageUrl": "images/json2.jpg"
   },
   {
-    "title": "3",
-    "imageUrl": "json3.jpg"
+    "title": "It Didn't Work Out",
+    "imageUrl": "images/json3.jpg"
   },
   {
-    "title": "4",
-    "imageUrl": "json4.jpg"
-  }
-
+    "title": "Enjoy Your Body",
+    "imageUrl": "images/json4.jpg"
+  },
   {
-   "title": "5",
-    "imageUrl": "json5.jpg"
-  }
-
+    "title": "Fortune 5",
+    "imageUrl": "images/json5.jpg"
+  },
   {
-   "title": "6",
-    "imageUrl": "json6.jpg"
-  }
-
-  { 
-    "title": "7",
-    "imageUrl": "json7.jpg"
-  }
-
+    "title": "Fortune 6",
+    "imageUrl": "images/json6.jpg"
+  },
   {
-   "title": "8",
-    "imageUrl": "json8.jpg"
-  }
-
+    "title": "Fortune 7",
+    "imageUrl": "images/json7.jpg"
+  },
   {
-   "title": "9",
-    "imageUrl": "json9.jpg"
-  }
-
+    "title": "Fortune 8",
+    "imageUrl": "images/json8.jpg"
+  },
   {
-   "title": "10",
-    "imageUrl": "json10.jpg"
-  }
-
+    "title": "Fortune 9",
+    "imageUrl": "images/json9.jpg"
+  },
   {
-   "title": "11",
-    "imageUrl": "json11.jpg"
+    "title": "Fortune 10",
+    "imageUrl": "images/json10.jpg"
+  },
+  {
+    "title": "Fortune 11",
+    "imageUrl": "images/json11.jpg"
   }
 ]
