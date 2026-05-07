@@ -6,269 +6,150 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    height: 100vh;
     overflow: hidden;
     position: relative;
 }
 
-body::before {
-    content: '';
+.background {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(100, 200, 255, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-    animation: gradientShift 15s ease-in-out infinite;
-}
-
-@keyframes gradientShift {
-    0%, 100% {
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
+    width: 100%;
+    height: 100%;
+    background: url('images/backgroundstars.png') center/cover no-repeat;
+    z-index: 0;
 }
 
 .container {
-    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
     z-index: 10;
-    max-width: 800px;
-    padding: 20px;
-    perspective: 1000px;
+}
+
+/* Title */
+.title-section {
+    padding: 30px 20px;
 }
 
 .title {
-    color: white;
-    font-size: 3em;
-    margin-bottom: 50px;
-    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    animation: titleFadeIn 0.8s ease-out;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 2em;
+    font-weight: 300;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease-out;
 }
 
-@keyframes titleFadeIn {
+@keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fortune-section {
-    position: relative;
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Cookie Styling */
-.cookie-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    transition: opacity 0.5s ease-out;
-    pointer-events: all;
-}
-
-.cookie-wrapper.hide {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.cookie {
-    width: 200px;
-    height: 100px;
-    position: relative;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3));
-    transition: transform 0.2s ease;
-}
-
-.cookie:hover {
-    transform: scale(1.05);
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
         transform: translateY(-20px);
     }
-}
-
-.cookie-half {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #d4a574 0%, #c9934d 50%, #b8860b 100%);
-    border-radius: 50% / 30%;
-    transform-origin: center;
-    box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.2),
-                inset 2px 2px 5px rgba(255, 255, 255, 0.1);
-}
-
-.cookie-top {
-    top: 0;
-    transform-origin: center bottom;
-    animation: cookieIdle 3s ease-in-out infinite;
-}
-
-.cookie-bottom {
-    top: 50%;
-    border-radius: 50% / 70%;
-    animation: cookieIdle 3s ease-in-out infinite 0.15s;
-}
-
-@keyframes cookieIdle {
-    0%, 100% {
-        transform: rotateX(0deg);
-    }
-    50% {
-        transform: rotateX(-5deg);
-    }
-}
-
-/* Cracking animation */
-.cookie-top.crack {
-    animation: crackTop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-}
-
-.cookie-bottom.crack {
-    animation: crackBottom 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-}
-
-@keyframes crackTop {
-    0% {
-        transform: rotateX(0deg) rotateZ(0deg) translateY(0);
-        opacity: 1;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: rotateX(-60deg) rotateZ(-45deg) translateY(-100px);
-        opacity: 0;
-    }
-}
-
-@keyframes crackBottom {
-    0% {
-        transform: rotateX(0deg) rotateZ(0deg) translateY(0);
-        opacity: 1;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: rotateX(60deg) rotateZ(45deg) translateY(100px);
-        opacity: 0;
-    }
-}
-
-.cookie-shine {
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    width: 60px;
-    height: 30px;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: shimmer 2s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0%, 100% {
-        opacity: 0.3;
-    }
-    50% {
-        opacity: 0.8;
-    }
-}
-
-.instruction {
-    position: absolute;
-    bottom: -60px;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1em;
-    animation: instructionFadeIn 1s ease-out 0.5s both;
-    cursor: pointer;
-}
-
-@keyframes instructionFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Fortune Display */
-.fortune-display {
-    position: absolute;
+/* Stars Container */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    z-index: 5;
+}
+
+/* Clickable star areas */
+.star-clickable {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.star-clickable:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Fortune Box */
+.fortune-box {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 20;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease-out;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 90%;
+    width: 500px;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
 }
 
-.fortune-display.show {
+.fortune-box.show {
     opacity: 1;
     pointer-events: all;
+    transform: translateX(-50%) translateY(0);
 }
 
+/* Star Highlight Box */
+.star-highlight {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 215, 0, 0.2);
+    pointer-events: none;
+    z-index: 15;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+/* Arrow pointing from star to box */
+.arrow {
+    position: fixed;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, #FFD700, transparent);
+    z-index: 12;
+    pointer-events: none;
+}
+
+/* Fortune Content */
 .fortune-content {
     width: 100%;
-    height: 350px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 15px;
     overflow: hidden;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .fortune-image {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
-    border-radius: 15px;
-    animation: zoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes zoomIn {
+@keyframes popIn {
     from {
         transform: scale(0.3);
         opacity: 0;
@@ -279,137 +160,93 @@ body::before {
     }
 }
 
-/* Button Styling */
-.button-new-fortune {
-    margin-top: 30px;
-    padding: 12px 40px;
-    font-size: 1.1em;
-    font-weight: 600;
-    color: white;
+/* Restart Button */
+.restart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     border: none;
-    border-radius: 50px;
     background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    color: white;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-    animation: buttonSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(255, 107, 107, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.button-new-fortune:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
-    background: linear-gradient(135deg, #ff5252, #e63946);
+.restart-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.6);
 }
 
-.button-new-fortune:active {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
-}
-
-@keyframes buttonSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Footer */
-.footer {
-    margin-top: 80px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1em;
-    animation: fadeIn 1s ease-out 1s both;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+.restart-btn:active {
+    transform: scale(0.95);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .title {
-        font-size: 2em;
-        margin-bottom: 30px;
+        font-size: 1.5em;
     }
 
-    .fortune-section {
-        height: 400px;
-    }
-
-    .cookie {
-        width: 150px;
-        height: 75px;
+    .fortune-box {
+        width: 85%;
+        padding: 20px;
+        bottom: 30px;
     }
 
     .fortune-content {
-        height: 280px;
+        height: 200px;
     }
 
-    .button-new-fortune {
-        padding: 10px 30px;
-        font-size: 1em;
+    .star-clickable {
+        width: 35px;
+        height: 35px;
     }
 
-    .instruction {
-        font-size: 0.95em;
-        bottom: -50px;
-    }
-
-    .container {
-        padding: 10px;
+    .star-highlight {
+        width: 40px;
+        height: 40px;
     }
 }
 
 @media (max-width: 480px) {
     .title {
-        font-size: 1.5em;
-        margin-bottom: 20px;
+        font-size: 1.2em;
+        padding: 15px 10px;
     }
 
-    .fortune-section {
-        height: 350px;
-    }
-
-    .cookie {
-        width: 120px;
-        height: 60px;
-    }
-
-    .cookie-half {
-        border-radius: 50% / 40%;
-    }
-
-    .cookie-bottom {
-        border-radius: 50% / 60%;
+    .fortune-box {
+        width: 90%;
+        padding: 15px;
+        bottom: 20px;
     }
 
     .fortune-content {
-        height: 220px;
-        border-radius: 15px;
+        height: 150px;
+        margin-bottom: 10px;
     }
 
-    .button-new-fortune {
-        padding: 8px 25px;
-        font-size: 0.9em;
-        margin-top: 20px;
+    .star-clickable {
+        width: 30px;
+        height: 30px;
     }
 
-    .footer {
-        margin-top: 60px;
-        font-size: 0.9em;
+    .star-highlight {
+        width: 35px;
+        height: 35px;
+        border-width: 2px;
     }
 
-    .instruction {
-        font-size: 0.85em;
-        bottom: -40px;
+    .restart-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 1em;
     }
 }
