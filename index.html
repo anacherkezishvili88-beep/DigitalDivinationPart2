@@ -3,159 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Fortune Cookie</title>
+    <title>Star Fortune Teller</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">🥠 Digital Fortune Teller 🥠</h1>
-        
-        <div class="fortune-section">
-            <!-- Cookie Container -->
-            <div class="cookie-wrapper" id="cookieWrapper">
-                <div class="cookie" id="cookie">
-                    <div class="cookie-half cookie-top"></div>
-                    <div class="cookie-half cookie-bottom"></div>
-                    <div class="cookie-shine"></div>
-                </div>
-                <p class="instruction" id="instruction">Click the cookie to reveal your fortune!</p>
-            </div>
+    <!-- Background image -->
+    <div class="background"></div>
 
-            <!-- Fortune Display -->
-            <div class="fortune-display" id="fortuneDisplay">
-                <div class="fortune-content">
-                    <img id="fortuneImage" src="" alt="Fortune" class="fortune-image">
-                </div>
-                <button class="button-new-fortune" id="newFortuneBtn">Get Another Fortune</button>
-            </div>
+    <div class="container">
+        <!-- Title -->
+        <div class="title-section">
+            <h1 class="title">Talk to the stars...hear what they have to say!</h1>
         </div>
 
-        <div class="footer">
-            <p>✨ May your fortunes guide you ✨</p>
+        <!-- Stars clickable area -->
+        <div class="stars-container" id="starsContainer">
+            <!-- Stars will be clickable areas -->
+        </div>
+
+        <!-- Fortune Display Box (Hidden by default) -->
+        <div class="fortune-box" id="fortuneBox">
+            <!-- Arrow pointing to star -->
+            <div class="arrow" id="arrow"></div>
+            
+            <!-- Yellow border around star -->
+            <div class="star-highlight" id="starHighlight"></div>
+
+            <!-- Fortune Image -->
+            <div class="fortune-content">
+                <img id="fortuneImage" src="" alt="Fortune" class="fortune-image">
+            </div>
+
+            <!-- Restart Button -->
+            <button class="restart-btn" id="restartBtn">✕</button>
         </div>
     </div>
 
     <script>
-        // INLINE SCRIPT - This should always work
+        console.log('=== STAR FORTUNE TELLER STARTED ===');
+
         let fortunes = [];
-        let currentState = 'idle';
+        let boxActive = false;
 
-        console.log('=== SCRIPT STARTED ===');
+        // Fortunes data
+        const fortuneData = [
+            { title: 'Focus on Improving', imageUrl: 'images/json1.jpg' },
+            { title: 'Care Instead of Control', imageUrl: 'images/json2.jpg' },
+            { title: 'It Didn\'t Work Out', imageUrl: 'images/json3.jpg' },
+            { title: 'Enjoy Your Body', imageUrl: 'images/json4.jpg' },
+            { title: 'Fortune 5', imageUrl: 'images/json5.jpg' },
+            { title: 'Fortune 6', imageUrl: 'images/json6.jpg' },
+            { title: 'Fortune 7', imageUrl: 'images/json7.jpg' },
+            { title: 'Fortune 8', imageUrl: 'images/json8.jpg' },
+            { title: 'Fortune 9', imageUrl: 'images/json9.jpg' },
+            { title: 'Fortune 10', imageUrl: 'images/json10.jpg' },
+            { title: 'Fortune 11', imageUrl: 'images/json11.jpg' }
+        ];
 
-        // Load fortunes
-        function loadFortunes() {
-            fortunes = [
-                { title: 'Focus on Improving', imageUrl: 'images/json1.jpg' },
-                { title: 'Care Instead of Control', imageUrl: 'images/json2.jpg' },
-                { title: 'It Didn\'t Work Out', imageUrl: 'images/json3.jpg' },
-                { title: 'Enjoy Your Body', imageUrl: 'images/json4.jpg' },
-                { title: 'Fortune 5', imageUrl: 'images/json5.jpg' },
-                { title: 'Fortune 6', imageUrl: 'images/json6.jpg' },
-                { title: 'Fortune 7', imageUrl: 'images/json7.jpg' },
-                { title: 'Fortune 8', imageUrl: 'images/json8.jpg' },
-                { title: 'Fortune 9', imageUrl: 'images/json9.jpg' },
-                { title: 'Fortune 10', imageUrl: 'images/json10.jpg' },
-                { title: 'Fortune 11', imageUrl: 'images/json11.jpg' },
-                { title: 'Fortune 12', imageUrl: 'images/json12.jpg' },
-                { title: 'Fortune 13', imageUrl: 'images/json13.jpg' },
-                { title: 'Fortune 14', imageUrl: 'images/json14.jpg' },
-                { title: 'Fortune 15', imageUrl: 'images/json15.jpg' },
-                { title: 'Fortune 16', imageUrl: 'images/json16.jpg' },
-                { title: 'Fortune 17', imageUrl: 'images/json17.jpg' },
-                { title: 'Fortune 18', imageUrl: 'images/json18.jpg' },
-                { title: 'Fortune 19', imageUrl: 'images/json19.jpg' },
-                { title: 'Fortune 20', imageUrl: 'images/json20.jpg' },
-                { title: 'Fortune 21', imageUrl: 'images/json21.jpg' },
-                { title: 'Fortune 22', imageUrl: 'images/json22.jpg' },
-                { title: 'Fortune 23', imageUrl: 'images/json23.jpg' },
-                { title: 'Fortune 24', imageUrl: 'images/json24.jpg' },
-                { title: 'Fortune 25', imageUrl: 'images/json25.jpg' },
-                { title: 'Fortune 26', imageUrl: 'images/json26.jpg' },
-                { title: 'Fortune 27', imageUrl: 'images/json27.jpg' },
-                { title: 'Fortune 28', imageUrl: 'images/json28.jpg' },
-                { title: 'Fortune 29', imageUrl: 'images/json29.jpg' },
-                { title: 'Fortune 30', imageUrl: 'images/json30.jpg' }
-            ];
-            console.log('Fortunes loaded:', fortunes.length);
-        }
+        fortunes = fortuneData;
+        console.log('Fortunes loaded:', fortunes.length);
 
+        // Get random fortune
         function getRandomFortune() {
             return fortunes[Math.floor(Math.random() * fortunes.length)];
         }
 
-        function displayFortune() {
-            const fortune = getRandomFortune();
-            const img = document.getElementById('fortuneImage');
-            const display = document.getElementById('fortuneDisplay');
+        // Show fortune box
+        function showFortune(star) {
+            console.log('Star clicked');
             
+            if (boxActive) return;
+
+            const fortune = getRandomFortune();
+            const box = document.getElementById('fortuneBox');
+            const img = document.getElementById('fortuneImage');
+            const highlight = document.getElementById('starHighlight');
+            const arrow = document.getElementById('arrow');
+
+            // Get star position
+            const starRect = star.getBoundingClientRect();
+            
+            // Position the highlight over the star
+            highlight.style.left = starRect.left + 'px';
+            highlight.style.top = starRect.top + 'px';
+
+            // Position the arrow
+            const boxRect = box.getBoundingClientRect();
+            arrow.style.left = starRect.left + 'px';
+            arrow.style.top = (starRect.top + 20) + 'px';
+            arrow.style.height = (boxRect.top - starRect.top - 20) + 'px';
+
+            // Set fortune image
             img.src = fortune.imageUrl;
             img.alt = fortune.title;
-            display.classList.add('show');
-            
+
+            // Show box with animation
+            box.classList.add('show');
+            boxActive = true;
+
             console.log('Fortune displayed:', fortune.title);
         }
 
-        function crackCookie() {
-            console.log('Crack called, current state:', currentState);
-            
-            if (currentState !== 'idle') return;
-            
-            currentState = 'cracking';
-            
-            const top = document.querySelector('.cookie-top');
-            const bottom = document.querySelector('.cookie-bottom');
-            const wrapper = document.getElementById('cookieWrapper');
-            
-            top.classList.add('crack');
-            bottom.classList.add('crack');
-            
-            console.log('Animation started');
-            
-            setTimeout(() => {
-                wrapper.classList.add('hide');
-                displayFortune();
-                currentState = 'displaying';
-                console.log('State: displaying');
-            }, 800);
+        // Close fortune box
+        function closeFortune() {
+            const box = document.getElementById('fortuneBox');
+            box.classList.remove('show');
+            boxActive = false;
+            console.log('Fortune box closed');
         }
 
-        function resetCookie() {
-            const top = document.querySelector('.cookie-top');
-            const bottom = document.querySelector('.cookie-bottom');
-            const wrapper = document.getElementById('cookieWrapper');
-            const display = document.getElementById('fortuneDisplay');
-            
-            top.classList.remove('crack');
-            bottom.classList.remove('crack');
-            wrapper.classList.remove('hide');
-            display.classList.remove('show');
-            
-            currentState = 'idle';
-            console.log('Cookie reset');
-        }
-
-        // Wait for DOM to load
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             console.log('=== DOM LOADED ===');
-            
-            loadFortunes();
-            
-            const cookie = document.getElementById('cookie');
-            const btn = document.getElementById('newFortuneBtn');
-            
-            console.log('Cookie element:', cookie ? 'FOUND' : 'NOT FOUND');
-            console.log('Button element:', btn ? 'FOUND' : 'NOT FOUND');
-            
-            if (cookie) {
-                cookie.addEventListener('click', crackCookie);
-                console.log('Click listener added to cookie');
+
+            const container = document.getElementById('starsContainer');
+            const restartBtn = document.getElementById('restartBtn');
+
+            // Define star positions (percentages of screen)
+            const starPositions = [
+                { x: 15, y: 15 },
+                { x: 35, y: 12 },
+                { x: 55, y: 18 },
+                { x: 70, y: 14 },
+                { x: 85, y: 16 },
+                { x: 25, y: 35 },
+                { x: 50, y: 30 },
+                { x: 65, y: 38 },
+                { x: 40, y: 50 },
+                { x: 75, y: 45 },
+                { x: 90, y: 35 }
+            ];
+
+            // Create clickable star elements
+            starPositions.forEach((pos, index) => {
+                const star = document.createElement('div');
+                star.className = 'star-clickable';
+                star.style.left = pos.x + '%';
+                star.style.top = pos.y + '%';
+
+                star.addEventListener('click', function(e) {
+                    showFortune(this);
+                });
+
+                container.appendChild(star);
+            });
+
+            console.log('Stars created:', starPositions.length);
+
+            // Restart button
+            if (restartBtn) {
+                restartBtn.addEventListener('click', closeFortune);
             }
-            
-            if (btn) {
-                btn.addEventListener('click', resetCookie);
-                console.log('Click listener added to button');
-            }
-            
+
             console.log('=== READY ===');
         });
     </script>
