@@ -1,164 +1,120 @@
+console.log('=== STAR FORTUNE TELLER STARTED ===');
+
 let fortunes = [];
-let currentState = 'idle';
+let boxActive = false;
 
-console.log('🔄 script.js is loading...');
-
+// ── Load fortunes from JSON ──────────────────────────────────────────────────
 async function loadFortunes() {
-    console.log('📦 loadFortunes() called');
     try {
         const response = await fetch('fortunes.json');
-        console.log('Fetch response:', response);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         fortunes = await response.json();
-        console.log('✅ Fortunes loaded from JSON:', fortunes);
-    } catch (error) {
-        console.error('❌ Error loading JSON:', error);
+        console.log('Fortunes loaded from JSON:', fortunes.length);
+    } catch (err) {
+        console.warn('Could not load fortunes.json, using fallback.', err);
         fortunes = [
-            { title: 'Focus on Improving', imageUrl: 'images/json1.jpg' },
+            { title: 'Focus on Improving',    imageUrl: 'images/json1.jpg' },
             { title: 'Care Instead of Control', imageUrl: 'images/json2.jpg' },
-            { title: 'It Didn\'t Work Out', imageUrl: 'images/json3.jpg' },
-            { title: 'Enjoy Your Body', imageUrl: 'images/json4.jpg' },
-            { title: 'Fortune 5', imageUrl: 'images/json5.jpg' },
-            { title: 'Fortune 6', imageUrl: 'images/json6.jpg' },
-            { title: 'Fortune 7', imageUrl: 'images/json7.jpg' }
+            { title: "It Didn't Work Out",     imageUrl: 'images/json3.jpg' },
+            { title: 'Enjoy Your Body',        imageUrl: 'images/json4.jpg' }
         ];
-        console.log('✅ Using fallback fortunes:', fortunes);
     }
 }
 
 function getRandomFortune() {
-    if (fortunes.length === 0) {
-        console.error('❌ No fortunes available');
-        return null;
-    }
-    const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    console.log('🎯 Selected fortune:', fortune);
-    return fortune;
+    return fortunes[Math.floor(Math.random() * fortunes.length)];
 }
 
-function displayFortune() {
-    console.log('📖 displayFortune() called');
-    const fortune = getRandomFortune();
-    
-    if (!fortune) {
-        console.error('❌ No fortune selected');
-        return;
-    }
+// ── Show fortune box ─────────────────────────────────────────────────────────
+function showFortune(starEl) {
+    if (boxActive) return;
+    boxActive = true;
 
-    const fortuneImage = document.getElementById('fortuneImage');
-    console.log('🖼️ fortuneImage element:', fortuneImage);
-    console.log('🖼️ Setting image to:', fortune.imageUrl);
-    
-    fortuneImage.src = fortune.imageUrl;
-    fortuneImage.alt = fortune.title;
+    const fortune   = getRandomFortune();
+    const box       = document.getElementById('fortuneBox');
+    const img       = document.getElementById('fortuneImage');
+    const highlight = document.getElementById('starHighlight');
 
-    const fortuneDisplay = document.getElementById('fortuneDisplay');
-    console.log('✨ fortuneDisplay element:', fortuneDisplay);
-    
-    fortuneDisplay.classList.add('show');
-    console.log('✨ Added show class to fortune display');
+    // Position the golden highlight ring over the clicked star
+    const rect = starEl.getBoundingClientRect();
+    const cx   = rect.left + rect.width  / 2;
+    const cy   = rect.top  + rect.height / 2;
+    highlight.style.left = cx + 'px';
+    highlight.style.top  = cy + 'px';
+    highlight.classList.add('visible');
+
+    // Load image — reset animation by cloning src trick
+    img.style.animation = 'none';
+    img.src = fortune.imageUrl;
+    img.alt = fortune.title;
+    // Re-trigger animation on next frame
+    requestAnimationFrame(() => {
+        img.style.animation = '';
+    });
+
+    // Show box
+    box.classList.add('show');
+    console.log('Fortune shown:', fortune.title);
 }
 
-function crackCookie() {
-    console.log('💥 crackCookie() called - current state:', currentState);
-    
-    if (currentState !== 'idle') {
-        console.log('⚠️ Not idle, ignoring click');
-        return;
-    }
-
-    currentState = 'cracking';
-    console.log('🎬 State changed to: cracking');
-
-    const cookieTop = document.querySelector('.cookie-top');
-    const cookieBottom = document.querySelector('.cookie-bottom');
-    const cookieWrapper = document.querySelector('.cookie-wrapper');
-
-    console.log('🍪 Cookie elements found:', { cookieTop, cookieBottom, cookieWrapper });
-
-    if (cookieTop && cookieBottom) {
-        cookieTop.classList.add('crack');
-        cookieBottom.classList.add('crack');
-        console.log('🎬 Added crack class to cookie halves');
-    }
-
-    setTimeout(() => {
-        console.log('⏱️ 800ms timeout fired');
-        if (cookieWrapper) {
-            cookieWrapper.classList.add('hide');
-            console.log('🎬 Added hide class to cookie wrapper');
-        }
-        displayFortune();
-        currentState = 'displaying';
-        console.log('✅ State changed to: displaying');
-    }, 800);
+// ── Close fortune box ────────────────────────────────────────────────────────
+function closeFortune() {
+    const box       = document.getElementById('fortuneBox');
+    const highlight = document.getElementById('starHighlight');
+    box.classList.remove('show');
+    highlight.classList.remove('visible');
+    boxActive = false;
+    console.log('Fortune closed');
 }
 
-function resetCookie() {
-    console.log('🔄 resetCookie() called');
-    currentState = 'idle';
+// ── Star positions (% of viewport) ──────────────────────────────────────────
+// Adjust these to align with the actual glowing stars in your background image
+const starPositions = [
+    { x: 47, y:  8 },   // top-center bright star
+    { x: 40, y: 17 },   // upper-mid left cluster
+    { x: 62, y: 13 },   // upper-mid right
+    { x: 78, y: 22 },   // right side upper
+    { x: 83, y: 34 },   // far right
+    { x: 46, y: 30 },   // center cluster top
+    { x: 55, y: 38 },   // center cluster mid
+    { x: 34, y: 40 },   // left mid
+    { x: 66, y: 45 },   // right mid
+    { x: 57, y: 53 },   // lower center
+    { x: 77, y: 53 },   // lower right
+    { x: 30, y: 58 },   // lower left
+    { x: 87, y: 47 },   // far right low
+];
 
-    const cookieTop = document.querySelector('.cookie-top');
-    const cookieBottom = document.querySelector('.cookie-bottom');
-    const cookieWrapper = document.querySelector('.cookie-wrapper');
-    const fortuneDisplay = document.getElementById('fortuneDisplay');
+// ── Init ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async function () {
+    await loadFortunes();
 
-    if (cookieTop) cookieTop.classList.remove('crack');
-    if (cookieBottom) cookieBottom.classList.remove('crack');
-    if (cookieWrapper) cookieWrapper.classList.remove('hide');
-    if (fortuneDisplay) fortuneDisplay.classList.remove('show');
+    const container  = document.getElementById('starsContainer');
+    const restartBtn = document.getElementById('restartBtn');
 
-    console.log('✅ Reset complete, state is now: idle');
-}
+    starPositions.forEach((pos) => {
+        const star = document.createElement('div');
+        star.className   = 'star-clickable';
+        star.style.left  = pos.x + '%';
+        star.style.top   = pos.y + '%';
 
-function handleCookieClick(e) {
-    console.log('👆 COOKIE CLICKED!', e);
-    if (currentState === 'idle') {
-        crackCookie();
-    }
-}
+        star.addEventListener('click', function () {
+            showFortune(this);
+        });
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOMContentLoaded fired!');
-    
-    console.log('📦 Loading fortunes...');
-    loadFortunes();
+        container.appendChild(star);
+    });
 
-    const cookie = document.getElementById('cookie');
-    const newFortuneBtn = document.getElementById('newFortuneBtn');
-
-    console.log('🍪 Cookie element:', cookie);
-    console.log('🔘 Button element:', newFortuneBtn);
-
-    if (cookie) {
-        cookie.addEventListener('click', handleCookieClick);
-        console.log('✅ Click listener added to cookie');
-    } else {
-        console.error('❌ Cookie element not found!');
-    }
-
-    if (newFortuneBtn) {
-        newFortuneBtn.addEventListener('click', resetCookie);
-        console.log('✅ Click listener added to button');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', closeFortune);
     }
 
-    document.addEventListener('keypress', function(e) {
-        console.log('⌨️ Keypress detected:', e.key);
-        if (e.key === 'Enter' || e.code === 'Space') {
-            e.preventDefault();
-            if (currentState === 'idle') {
-                crackCookie();
-            } else if (currentState === 'displaying') {
-                resetCookie();
-            }
+    // Keyboard support
+    document.addEventListener('keydown', function (e) {
+        if ((e.key === 'Escape') && boxActive) {
+            closeFortune();
         }
     });
 
-    console.log('✅✅✅ Script initialization COMPLETE ✅✅✅');
+    console.log('=== READY — stars:', starPositions.length, '| fortunes:', fortunes.length);
 });
-
-console.log('🔄 script.js has finished loading');
