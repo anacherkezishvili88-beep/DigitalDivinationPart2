@@ -72,7 +72,7 @@ function closeFortune() {
 const starPositions = [
     { x: 47, y:  8 },   // top-center bright star
     { x: 40, y: 17 },   // upper-mid left cluster
-    { x: 62, y: 13 },   // upper-mid right
+    { x: 65, y: 18 },   // upper-mid right
     { x: 83, y: 28 },   // right side upper
     { x: 83, y: 34 },   // far right
     { x: 46, y: 30 },   // center cluster top
