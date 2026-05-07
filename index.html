@@ -7,151 +7,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Background image -->
     <div class="background"></div>
 
-    <div class="container">
-        <!-- Stars clickable area -->
-        <div class="stars-container" id="starsContainer">
-            <!-- Stars will be clickable areas -->
-        </div>
+
+        <div class="stars-container" id="starsContainer"></div>
 
         <!-- Fortune Display Box (Hidden by default) -->
         <div class="fortune-box" id="fortuneBox">
-            <!-- Arrow pointing to star -->
-            <div class="arrow" id="arrow"></div>
-            
-            <!-- Yellow border around star -->
-            <div class="star-highlight" id="starHighlight"></div>
-
-            <!-- Fortune Image -->
+            <button class="restart-btn" id="restartBtn">✕</button>
             <div class="fortune-content">
                 <img id="fortuneImage" src="" alt="Fortune" class="fortune-image">
             </div>
-
-            <!-- Restart Button -->
-            <button class="restart-btn" id="restartBtn">✕</button>
         </div>
+
+        <!-- Star highlight overlay -->
+        <div class="star-highlight" id="starHighlight"></div>
     </div>
 
-    <script>
-        console.log('=== STAR FORTUNE TELLER STARTED ===');
-
-        let fortunes = [];
-        let boxActive = false;
-
-        // Fortunes data
-        const fortuneData = [
-            { title: 'Focus on Improving', imageUrl: 'images/json1.jpg' },
-            { title: 'Care Instead of Control', imageUrl: 'images/json2.jpg' },
-            { title: 'It Didn\'t Work Out', imageUrl: 'images/json3.jpg' },
-            { title: 'Enjoy Your Body', imageUrl: 'images/json4.jpg' },
-            { title: 'Fortune 5', imageUrl: 'images/json5.jpg' },
-            { title: 'Fortune 6', imageUrl: 'images/json6.jpg' },
-            { title: 'Fortune 7', imageUrl: 'images/json7.jpg' },
-            { title: 'Fortune 8', imageUrl: 'images/json8.jpg' },
-            { title: 'Fortune 9', imageUrl: 'images/json9.jpg' },
-            { title: 'Fortune 10', imageUrl: 'images/json10.jpg' },
-            { title: 'Fortune 11', imageUrl: 'images/json11.jpg' }
-        ];
-
-        fortunes = fortuneData;
-        console.log('Fortunes loaded:', fortunes.length);
-
-        // Get random fortune
-        function getRandomFortune() {
-            return fortunes[Math.floor(Math.random() * fortunes.length)];
-        }
-
-        // Show fortune box
-        function showFortune(star) {
-            console.log('Star clicked');
-            
-            if (boxActive) return;
-
-            const fortune = getRandomFortune();
-            const box = document.getElementById('fortuneBox');
-            const img = document.getElementById('fortuneImage');
-            const highlight = document.getElementById('starHighlight');
-            const arrow = document.getElementById('arrow');
-
-            // Get star position
-            const starRect = star.getBoundingClientRect();
-            
-            // Position the highlight over the star
-            highlight.style.left = starRect.left + 'px';
-            highlight.style.top = starRect.top + 'px';
-
-            // Position the arrow
-            const boxRect = box.getBoundingClientRect();
-            arrow.style.left = starRect.left + 'px';
-            arrow.style.top = (starRect.top + 20) + 'px';
-            arrow.style.height = (boxRect.top - starRect.top - 20) + 'px';
-
-            // Set fortune image
-            img.src = fortune.imageUrl;
-            img.alt = fortune.title;
-
-            // Show box with animation
-            box.classList.add('show');
-            boxActive = true;
-
-            console.log('Fortune displayed:', fortune.title);
-        }
-
-        // Close fortune box
-        function closeFortune() {
-            const box = document.getElementById('fortuneBox');
-            box.classList.remove('show');
-            boxActive = false;
-            console.log('Fortune box closed');
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('=== DOM LOADED ===');
-
-            const container = document.getElementById('starsContainer');
-            const restartBtn = document.getElementById('restartBtn');
-
-            // Define star positions (percentages of screen)
-            const starPositions = [
-                { x: 15, y: 15 },
-                { x: 35, y: 12 },
-                { x: 55, y: 18 },
-                { x: 70, y: 14 },
-                { x: 85, y: 16 },
-                { x: 25, y: 35 },
-                { x: 50, y: 30 },
-                { x: 65, y: 38 },
-                { x: 40, y: 50 },
-                { x: 75, y: 45 },
-                { x: 90, y: 35 }
-            ];
-
-            // Create clickable star elements
-            starPositions.forEach((pos, index) => {
-                const star = document.createElement('div');
-                star.className = 'star-clickable';
-                star.style.left = pos.x + '%';
-                star.style.top = pos.y + '%';
-
-                star.addEventListener('click', function(e) {
-                    showFortune(this);
-                });
-
-                container.appendChild(star);
-            });
-
-            console.log('Stars created:', starPositions.length);
-
-            // Restart button
-            if (restartBtn) {
-                restartBtn.addEventListener('click', closeFortune);
-            }
-
-            console.log('=== READY ===');
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
