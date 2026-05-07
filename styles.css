@@ -37,8 +37,10 @@ body {
     font-weight: 100;
     text-shadow: 0 2px 8px rgba(0,0,0,0.6);
     line-height: 1.4;
-    pointer-events: none;
+    pointer-events: all;
     z-index: 6;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* Stars Container */
