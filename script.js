@@ -70,19 +70,16 @@ function closeFortune() {
 // ── Star positions (% of viewport) ──────────────────────────────────────────
 // Adjust these to align with the actual glowing stars in your background image
 const starPositions = [
-    { x: 47, y:  8 },   // top-center bright star
+    { x: 50, y:  5 },   // top-center bright star
     { x: 40, y: 17 },   // upper-mid left cluster
-    { x: 65, y: 18 },   // upper-mid right
+    { x: 65, y: 22 },   // upper-mid right
     { x: 83, y: 28 },   // right side upper
-    { x: 83, y: 34 },   // far right
-    { x: 46, y: 30 },   // center cluster top
-    { x: 55, y: 38 },   // center cluster mid
-    { x: 34, y: 40 },   // left mid
-    { x: 66, y: 45 },   // right mid
-    { x: 57, y: 53 },   // lower center
-    { x: 77, y: 53 },   // lower right
-    { x: 30, y: 58 },   // lower left
-    { x: 87, y: 47 },   // far right low
+    { x: 78, y: 39 },   // far right
+    { x: 46, y: 35 },   // center cluster top
+    { x: 40, y: 41 },   // left mid
+    { x: 55, y: 51 },   // lower center
+    { x: 62, y: 52 },   // lower right
+    { x: 35, y: 59 },   // lower left
 ];
 
 // ── Init ─────────────────────────────────────────────────────────────────────
