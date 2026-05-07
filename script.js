@@ -78,7 +78,7 @@ const starPositions = [
     { x: 46, y: 35 },   // center cluster top
     { x: 40, y: 41 },   // left mid
     { x: 55, y: 51 },   // lower center
-    { x: 62, y: 52 },   // lower right
+    { x: 82, y: 52 },   // lower right
     { x: 35, y: 59 },   // lower left
 ];
 
