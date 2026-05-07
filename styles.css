@@ -29,28 +29,17 @@ body {
     z-index: 10;
 }
 
-/* Title */
-.title-section {
-    padding: 30px 20px;
-}
-
-.title {
+.title-text {
+    position: absolute;
+    top: 28%;
+    left: 5%;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 2em;
+    font-size: 1.4em;
     font-weight: 300;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    animation: fadeIn 1s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    line-height: 1.4;
+    pointer-events: none;
+    z-index: 6;
 }
 
 /* Stars Container */
@@ -66,35 +55,56 @@ body {
 /* Clickable star areas */
 .star-clickable {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     transform: translate(-50%, -50%);
     cursor: pointer;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease;
+    z-index: 6;
 }
 
 .star-clickable:hover {
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(1.3);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
+}
+
+/* Star Highlight (yellow border shown on click) */
+.star-highlight {
+    position: fixed;
+    width: 54px;
+    height: 54px;
+    border: 3px solid #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.8), inset 0 0 10px rgba(255, 215, 0, 0.2);
+    pointer-events: none;
+    z-index: 15;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.star-highlight.visible {
+    opacity: 1;
 }
 
 /* Fortune Box */
 .fortune-box {
     position: fixed;
-    bottom: 50px;
+    bottom: 40px;
     left: 50%;
-    transform: translateX(-50%) translateY(30px);
-    background: rgba(255, 255, 255, 0.95);
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(255, 255, 255, 0.97);
     border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     z-index: 20;
     opacity: 0;
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    max-width: 90%;
-    width: 500px;
-    display: flex !important;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 420px;
+    max-width: 90vw;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -105,62 +115,33 @@ body {
     transform: translateX(-50%) translateY(0);
 }
 
-/* Star Highlight Box */
-.star-highlight {
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    border: 3px solid #FFD700;
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 215, 0, 0.2);
-    pointer-events: none;
-    z-index: 15;
-    transition: all 0.3s ease;
-    transform: translate(-50%, -50%);
-}
-
-/* Arrow pointing from star to box */
-.arrow {
-    position: fixed;
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(to bottom, #FFD700, transparent);
-    z-index: 12;
-    pointer-events: none;
-}
-
 /* Fortune Content */
 .fortune-content {
     width: 100%;
-    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
-    overflow: hidden;
     border-radius: 10px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 240px;
 }
 
 .fortune-image {
-    max-width: 90%;
-    max-height: 90%;
+    width: 100%;
+    height: auto;
+    max-height: 320px;
     object-fit: contain;
     animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: block;
 }
 
 @keyframes popIn {
-    from {
-        transform: scale(0.3);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
 }
 
-/* Restart Button */
+/* Restart / Close Button */
 .restart-btn {
     position: absolute;
     top: 10px;
@@ -171,82 +152,33 @@ body {
     border: none;
     background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
     color: white;
-    font-size: 1.2em;
+    font-size: 1em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 3px 8px rgba(255, 107, 107, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 25;
 }
 
 .restart-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.6);
 }
 
-.restart-btn:active {
-    transform: scale(0.95);
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-    .title {
-        font-size: 1.5em;
-    }
-
-    .fortune-box {
-        width: 85%;
-        padding: 20px;
-        bottom: 30px;
-    }
-
-    .fortune-content {
-        height: 200px;
-    }
-
-    .star-clickable {
-        width: 35px;
-        height: 35px;
-    }
-
-    .star-highlight {
-        width: 40px;
-        height: 40px;
-    }
+    .fortune-box { width: 88vw; padding: 16px; bottom: 24px; }
+    .fortune-content { min-height: 180px; }
+    .fortune-image { max-height: 240px; }
+    .title-text { font-size: 1.1em; }
 }
 
 @media (max-width: 480px) {
-    .title {
-        font-size: 1.2em;
-        padding: 15px 10px;
-    }
-
-    .fortune-box {
-        width: 90%;
-        padding: 15px;
-        bottom: 20px;
-    }
-
-    .fortune-content {
-        height: 150px;
-        margin-bottom: 10px;
-    }
-
-    .star-clickable {
-        width: 30px;
-        height: 30px;
-    }
-
-    .star-highlight {
-        width: 35px;
-        height: 35px;
-        border-width: 2px;
-    }
-
-    .restart-btn {
-        width: 25px;
-        height: 25px;
-        font-size: 1em;
-    }
+    .fortune-box { width: 92vw; padding: 12px; bottom: 16px; }
+    .fortune-content { min-height: 140px; }
+    .fortune-image { max-height: 180px; }
+    .title-text { font-size: 0.95em; }
+    .star-clickable { width: 36px; height: 36px; }
 }
